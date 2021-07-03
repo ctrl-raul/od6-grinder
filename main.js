@@ -352,7 +352,7 @@ function update () {
 }
 
 
-function addDecimalSeparators (x, separator = '.') {
+function addDecimalSeparators (x, separator = ',') {
 
   const [ints, decimals] = Math.abs(x).toString().split('.');
 
