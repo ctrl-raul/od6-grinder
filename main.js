@@ -341,8 +341,8 @@ function update () {
 
 
   expOut.textContent = addDecimalSeparators(exp);
-  toLevelUpOut.textContent = addDecimalSeparators(levelToExperience[level + 1] - exp);
-  toLevel250Out.textContent = addDecimalSeparators(expToLevel250);
+  toLevelUpOut.textContent = addDecimalSeparators(parseFloat((levelToExperience[level + 1] - exp).toFixed(2)));
+  toLevel250Out.textContent = addDecimalSeparators(parseFloat(expToLevel250.toFixed(2)));
   runsPerDayOut.textContent = addDecimalSeparators(runsPerDay);
   timeLeftOut.textContent = daysLeft;
   finishDateOut.textContent = dateOfReaching.toLocaleDateString();
