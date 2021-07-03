@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>OD6 Grinder</title>
+
+	<link rel="stylesheet" href="style.css">
+
+	<!-- font -->
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
+	</style>
+
+</head>
+<body>
+
+	<div class="background"></div>
+  
+  <header>
+    <h3 title="Overlod's Den - Mission 6">OD6 Grinder</h3>
+  </header>
+  
+  <main>
+
+    <div class="boxes">
+      
+      <div class="box shadow-box">
+				<label>
+					Level
+					<input type="number" id="level-in" min="1" max="249" value="1">
+				</label>
+				<label>
+					Experience %
+					<input type="number" id="exp-percent-in" min="0" max="100" value="0">
+				</label>
+				<label title="How many times do you play Overlod's Den Mission 6 on insane every day?">
+					Runs per day
+					<input type="number" id="runs-per-day-in" min="0" max="1000" value="1">
+				</label>
+			</div>
+
+      <div class="box shadow-box">
+				<div>Experience: <span id="exp-out" class="relevant">?</span></div>
+				<div>To level up: <span id="to-up-out" class="relevant">?</span></div>
+				<div>To level 250: <span id="to-250-out" class="relevant">?</span></div>
+			</div>
+      
+    </div>
+    
+    <div class="conclusion">
+      Playing mission 6 of Overlord's Den on insane difficulty
+      <span id="runs-per-day-out">?</span>
+      times per day,
+			<span class="relevant">
+				you will reach level 250 in
+      	<span id="time-left-out">?</span>
+				days (<span id="finish-date-out">?</span>)
+			</span>
+			- You're <span id="done-percent-out" title="?%">?</span>% of the way through!
+    </div>
+
+		<hr>
+    
+    <ul class="info shadow-box">
+      <li>
+        Since the game rounds experience
+				percentage, this calculation may
+				not be totally accurate.
+      </li>
+    </ul>
+
+  </main>
+
+	<script defer src="main.js"></script>
+
+</body>
+</html>
