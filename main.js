@@ -293,7 +293,7 @@ function init () {
     update();
   });
 
-  levelIn.addEventListener('input', e => {
+  runsPerDayIn.addEventListener('input', e => {
     e.target.value = clamp(0, 15790, Math.abs(parseInt(e.target.value) || 0));
     update();
   });
