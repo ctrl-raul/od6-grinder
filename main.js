@@ -9,6 +9,7 @@
 // Data
 
 const levelToExperience = {
+  "0": 0,
   "1": 0,
   "2": 100,
   "3": 200,
@@ -262,6 +263,11 @@ const levelToExperience = {
 };
 
 
+let level = 1;
+let expPercent = 0;
+let runsPerDay = 1;
+
+
 // Elements
 
 // Inputs
@@ -284,17 +290,32 @@ const donePercentOut = document.getElementById('done-percent-out');
 function init () {
 
   levelIn.addEventListener('input', e => {
-    e.target.value = clamp(1, 249, Math.abs(parseInt(e.target.value) || 0));
+    const value = parseInt(e.target.value) || 0;
+    const saneValue = clamp(0, 249, Math.abs(value));
+    level = saneValue;
+    if (value !== saneValue) {
+      e.target.value = saneValue;
+    }
     update();
   });
 
   expPercentIn.addEventListener('input', e => {
-    e.target.value = clamp(0, 100, Math.abs(parseFloat(e.target.value) || 0));
+    const value = parseFloat(e.target.value) || 0;
+    const saneValue = clamp(0, 100, Math.abs(value));
+    expPercent = saneValue;
+    if (value !== saneValue) {
+      e.target.value = saneValue;
+    }
     update();
   });
 
   runsPerDayIn.addEventListener('input', e => {
-    e.target.value = clamp(0, 15790, Math.abs(parseInt(e.target.value) || 0));
+    const value = parseInt(e.target.value) || 0;
+    const saneValue = clamp(0, 15790, Math.abs(value));
+    runsPerDay = saneValue;
+    if (value !== saneValue) {
+      e.target.value = saneValue;
+    }
     update();
   });
 
@@ -308,19 +329,15 @@ function update () {
   const expFromMission = 19000;
   const millisecondsInDay = 86400000;
 
-  const level = parseInt(levelIn.value);
-  const expPercent = Number(expPercentIn.value);
-  const runsPerDay = Number(runsPerDayIn.value);
-
   const thisLevelExp = levelToExperience[level];
   const nextLevelExp = levelToExperience[level + 1];
   const exp = thisLevelExp + (nextLevelExp - thisLevelExp) * expPercent / 100;
   const expToLevel250 = levelToExperience['250'] - exp;
 
   const runsNeeded = Math.ceil(expToLevel250 / expFromMission);
-  const daysLeft = Math.ceil(runsNeeded / runsPerDay);
+  const daysLeft = Math.ceil(runsNeeded / runsPerDay) || 0;
   const dateOfReaching = new Date(Date.now() + millisecondsInDay * daysLeft);
-  const donePercent = exp / 3e8;
+  const donePercent = exp / 3e8 * 100;
 
 
   expOut.textContent = addDecimalSeparators(exp);
@@ -329,7 +346,7 @@ function update () {
   runsPerDayOut.textContent = addDecimalSeparators(runsPerDay);
   timeLeftOut.textContent = daysLeft;
   finishDateOut.textContent = dateOfReaching.toLocaleDateString();
-  donePercentOut.textContent = parseFloat(donePercent.toFixed(2));
+  donePercentOut.textContent = getWithRelevantDecimals(donePercent);
   donePercentOut.title = donePercent + '%';
 
 }
@@ -363,6 +380,16 @@ function addDecimalSeparators (x, separator = '.') {
 
 function clamp (min, max, x) {
   return Math.max(min, Math.min(max, x));
+}
+
+
+function getWithRelevantDecimals (x) {
+  const [ints, decimals] = x.toString().split('.');
+  if (!decimals) {
+    return ints;
+  }
+  const match = decimals.match(/(0*[^0]{1,2})/);
+  return ints + (match ? '.' + match[0] : '');
 }
 
 
